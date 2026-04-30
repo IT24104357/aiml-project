@@ -10,9 +10,9 @@ router.post("/predict", (req, res) => {
 
   const input = JSON.stringify(req.body);
 
-  const scriptPath = path.join(__dirname, "../../ai/predict.py");
+  const scriptPath = path.join(__dirname, "../ai/predict.py");
 
-  exec(`python "${scriptPath}" '${input}'`, (error, stdout, stderr) => {
+  exec(`python3 "${scriptPath}" '${input}'`), (error, stdout, stderr) => {
 
     if (error) {
       console.log("Python error:", error);
