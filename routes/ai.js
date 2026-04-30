@@ -7,7 +7,7 @@ router.use(protect);
 router.post("/predict", async (req, res) => {
   try {
     const response = await axios.post(
-      "https://your-ai-api.onrender.com/predict",
+      "https://aiml-project-ai.onrender.com/predict",
       req.body
     );
 
