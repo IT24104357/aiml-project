@@ -1,31 +1,22 @@
-
 const protect = require("../middleware/authMiddleware");
 const router = require("express").Router();
-const { exec } = require("child_process");
-const path = require("path");
+const axios = require("axios");
 
 router.use(protect);
 
-router.post("/predict", (req, res) => {
+router.post("/predict", async (req, res) => {
+  try {
+    const response = await axios.post(
+      "https://your-ai-api.onrender.com/predict",
+      req.body
+    );
 
-  const input = JSON.stringify(req.body);
+    res.json(response.data);
 
-  const scriptPath = path.join(__dirname, "../ai/predict.py");
-
-  exec(`python3 "${scriptPath}" '${input}'`), (error, stdout, stderr) => {
-
-    if (error) {
-      console.log("Python error:", error);
-      console.log(stderr);
-      return res.json({ error: "Prediction failed" });
-    }
-
-    res.json({
-      predicted_quantity: parseInt(stdout)
-    });
-
-  });
-
+  } catch (error) {
+    console.log("AI API error:", error.message);
+    res.status(500).json({ error: "Prediction failed" });
+  }
 });
 
 module.exports = router;
