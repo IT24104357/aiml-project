@@ -153,7 +153,7 @@ else{
 
    Price: Number(req.body.Price),
 
-   image: req.file ? req.file.filename : "",
+   image: req.file ? req.file.path : "",
 
    quantity: Number(req.body.quantity),
    availability: req.body.availability,
@@ -278,7 +278,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
         Food_SubType: req.body.Food_SubType,
         Price: Number(req.body.Price),
         quantity: Number(req.body.quantity),
-        image: req.file ? req.file.filename : req.body.image,
+        image: req.file ? req.file.path : req.body.image,
         availability: req.body.availability
       },
       { new: true }

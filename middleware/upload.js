@@ -1,14 +1,40 @@
-const multer = require("multer");
+const multer =
+  require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+const {
+  CloudinaryStorage,
+} = require(
+  "multer-storage-cloudinary"
+);
 
-const upload = multer({ storage });
+const cloudinary =
+  require("../cloudinary");
 
-module.exports = upload;
+const storage =
+  new CloudinaryStorage({
+
+    cloudinary,
+
+    params: {
+
+      folder:
+        "canteen-foods",
+
+      allowed_formats: [
+        "jpg",
+        "png",
+        "jpeg",
+        "webp",
+      ],
+
+    },
+
+  });
+
+const upload =
+  multer({
+    storage,
+  });
+
+module.exports =
+  upload;
