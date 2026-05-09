@@ -180,13 +180,23 @@ else{
 
   res.json(savedMenu);
 
- }catch(err){
+}catch(err){
 
-  console.log(err);
-  res.status(500).json(err);
+  console.log(
+    "FULL ERROR MESSAGE:",
+    err.message
+  );
 
- }
+  console.log(
+    "FULL ERROR OBJECT:",
+    err
+  );
 
+  res.status(500).json({
+    error: err.message
+  });
+
+}
 });
 
 
