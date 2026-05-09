@@ -15,14 +15,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* ADD USER (ADMIN ONLY) */
+/* ADD USER */
 router.post("/", async (req, res) => {
   try {
-    if (req.body.currentRole !== "admin") {
-      return res.status(403).json("Only admin can add users");
-    }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword =
+      await bcrypt.hash(
+        req.body.password,
+        10
+      );
 
     const newUser = new User({
       username: req.body.username,
@@ -32,13 +33,18 @@ router.post("/", async (req, res) => {
       role: req.body.role
     });
 
-    const savedUser = await newUser.save();
+    const savedUser =
+      await newUser.save();
+
     res.json(savedUser);
 
   } catch (err) {
+
     res.status(500).json(err);
+
   }
 });
+
 
 /* DELETE USER */
 router.delete("/:id", async (req, res) => {
